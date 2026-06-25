@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="114.85736mm"
+   height="25.299322mm"
+   viewBox="0 0 434.10657 95.619486"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg">
+  <title id="title">COMPANY_LOGO</title>
+  <desc id="desc">Placeholder logo lockup. Replace this SVG with the company wordmark. Light variant for use on dark/navy backgrounds.</desc>
+  <!-- COMPANY_LOGO placeholder. Right-anchored to the viewBox right edge so it sits flush
+       with the slide-head's right padding. Replace the <text> below (or the whole file)
+       with the real wordmark; keep the viewBox so the layout constants in brand.md hold. -->
+  <text
+     x="434.10657"
+     y="62"
+     text-anchor="end"
+     font-family="Inter, Arial, sans-serif"
+     font-size="46"
+     font-weight="700"
+     letter-spacing="-1"
+     fill="#F9F9F9">COMPANY_LOGO</text>
+</svg>

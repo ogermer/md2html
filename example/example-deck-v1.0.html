@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Example Deck · Web Viewer</title>
+<meta name="description" content="QA sample deck generated from the cleaned create-html-from-md skill.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy-900:#06245A; --navy-700:#0B3B8C; --navy-500:#2E5BBF; --navy-50:#EAF1FB;
+  --teal-700:#16998A; --teal-500:#1FB8A0; --teal-50:#EAF7F4;
+  --amber-700:#C7770A; --amber-500:#F39C12; --amber-50:#FCEDB7;
+  --slate-950:#0F1422; --slate-800:#1F2A3D; --slate-600:#4A5A70;
+  --slate-400:#8A95A8; --slate-200:#E2E6EC; --slate-100:#EEF1F5; --slate-50:#F8FAFC;
+  --white:#FFFFFF; --success:#28A745; --danger:#D9534F;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --serif:'Source Serif 4',Georgia,serif;
+  --slide-w:1280px; --slide-h:720px;
+}
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; height:100%; font-family:var(--sans); background:var(--slate-950); color:var(--slate-600); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; overflow:hidden; }
+.stage { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:#15181F; }
+.stage::before, .stage::after { content:''; position:absolute; top:0; bottom:0; width:25%; z-index:5; cursor:pointer; }
+.stage::before { left:0; } .stage::after { right:0; }
+.frame { width:var(--slide-w); height:var(--slide-h); background:var(--slate-50); position:relative; box-shadow:0 30px 80px rgba(0,0,0,0.4); transform-origin:center center; border-radius:4px; overflow:hidden; }
+.slide { position:absolute; inset:0; display:none; flex-direction:column; padding:36px 64px 32px; background:var(--slate-50); animation:fade-in 280ms ease; }
+.slide.active { display:flex; }
+@keyframes fade-in { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+.slide-head { display:flex; justify-content:space-between; align-items:center; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--slate-400); margin-bottom:14px; font-variant-numeric:tabular-nums; font-weight:500; border-bottom:1.3px solid var(--slate-200); padding-bottom:10px; flex:0 0 auto; }
+.slide-head .brand { display:inline-flex; align-items:center; color:var(--slate-800); letter-spacing:-0.005em; text-transform:none; font-weight:600; font-size:13px; gap:0; height:22px; }
+.slide-head .brand svg.brand-svg { height:22px; width:auto; }
+.slide-head .brand svg.brand-svg.blue  { display:block; }
+.slide-head .brand svg.brand-svg.white { display:none; }
+.slide.cover .slide-head .brand svg.brand-svg.blue,
+.slide.part-divider .slide-head .brand svg.brand-svg.blue  { display:none; }
+.slide.cover .slide-head .brand svg.brand-svg.white,
+.slide.part-divider .slide-head .brand svg.brand-svg.white { display:block; }
+.slide-body { flex:1 1 auto; display:flex; flex-direction:column; min-height:0; }
+.slide-foot { display:flex; justify-content:space-between; align-items:center; font-size:9.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--slate-400); font-variant-numeric:tabular-nums; border-top:1.3px solid var(--slate-200); padding-top:10px; margin-top:12px; flex:0 0 auto; }
+.slide h1 { font-size:28px; font-weight:700; line-height:1.14; letter-spacing:-0.018em; color:var(--navy-700); margin:0 0 8px; }
+.slide .subtitle { font-size:13.5px; line-height:1.42; color:var(--slate-600); margin:0 0 14px; max-width:1000px; font-weight:400; }
+.slide .accent-bar { width:48px; height:2.5px; background:var(--teal-500); margin:-2px 0 10px; }
+.slide p { margin:0 0 7px; font-size:11.5px; line-height:1.5; }
+.slide ul { padding:0; margin:0 0 8px; list-style:none; }
+.slide ul li { position:relative; padding-left:14px; margin:3px 0; font-size:11px; line-height:1.38; }
+.slide ul li::before { content:''; position:absolute; left:0; top:6px; width:5px; height:5px; border-radius:50%; background:var(--navy-700); }
+.cols { display:flex; gap:22px; align-items:flex-start; }
+.cols .col { flex:1 1 0; min-width:0; }
+.cols .col h3 { font-size:12.5px; font-weight:600; color:var(--slate-950); margin:8px 0 3px; }
+.bottom-callout { margin-top:auto; padding:9px 16px; background:var(--navy-50); border-left:5.2px solid var(--navy-700); font-style:italic; color:var(--slate-800); font-size:12.5px; line-height:1.42; }
+.bottom-callout.teal { background:var(--teal-50); border-left-color:var(--teal-500); }
+.bottom-callout.amber { background:var(--amber-50); border-left-color:var(--amber-500); }
+/* cover + dividers */
+.slide.cover { background:var(--navy-900); color:var(--white); padding:60px 80px; }
+.slide.cover .slide-head { color:rgba(255,255,255,0.55); border-bottom-color:rgba(255,255,255,0.15); }
+.slide.cover .slide-foot { color:rgba(255,255,255,0.4); border-top-color:rgba(255,255,255,0.15); }
+.slide.cover .cover-center { margin-top:auto; margin-bottom:auto; }
+.slide.cover .tag { display:inline-block; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--teal-500); border:1px solid var(--teal-500); padding:7px 16px; border-radius:999px; margin-bottom:24px; font-weight:500; }
+.slide.cover h1 { font-size:104px; font-weight:700; letter-spacing:-0.028em; line-height:1.02; margin:0 0 20px; color:var(--white); }
+.slide.cover .lede { font-size:18px; color:rgba(255,255,255,0.78); max-width:880px; line-height:1.5; }
+.slide.cover .cover-meta-row { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; font-size:9.5px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.45); margin-top:40px; padding-top:18px; border-top:1px solid rgba(255,255,255,0.15); }
+.slide.cover .cover-meta-row div span { display:block; color:var(--white); font-size:13px; letter-spacing:0; text-transform:none; margin-top:5px; font-weight:500; line-height:1.35; }
+.slide.part-divider { background:linear-gradient(135deg,var(--navy-900) 0%,var(--navy-700) 100%); color:var(--white); padding:60px 80px; }
+.slide.part-divider .slide-head { color:rgba(255,255,255,0.6); border-bottom-color:rgba(255,255,255,0.15); }
+.slide.part-divider .slide-foot { color:rgba(255,255,255,0.4); border-top-color:rgba(255,255,255,0.15); }
+.slide.part-divider .slide-body { justify-content:center; }
+.slide.part-divider .part-number { font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--teal-500); margin-bottom:14px; font-weight:600; }
+.slide.part-divider h1 { font-size:80px; font-weight:700; letter-spacing:-0.028em; line-height:1.04; color:var(--white); margin:0 0 22px; }
+.slide.part-divider .part-lede { font-size:16px; line-height:1.5; color:rgba(255,255,255,0.72); max-width:880px; margin-bottom:24px; }
+.slide.part-divider .part-chips { display:flex; gap:10px; flex-wrap:wrap; }
+.slide.part-divider .chip { font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.85); border:1px solid rgba(255,255,255,0.25); padding:5px 12px; border-radius:999px; }
+/* patterns */
+.three-stat { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:8px 0; }
+.stat-card { background:var(--white); border:1.3px solid var(--slate-200); border-top:3.9px solid var(--navy-700); padding:14px 18px 12px; border-radius:4px; }
+.stat-card .big { font-size:42px; font-weight:700; color:var(--navy-700); line-height:1.0; letter-spacing:-0.035em; font-variant-numeric:tabular-nums; margin-bottom:8px; }
+.stat-card .label { font-size:11.5px; color:var(--slate-800); font-weight:500; line-height:1.38; margin-bottom:6px; }
+.stat-card .source { font-size:9.5px; color:var(--slate-400); font-style:italic; line-height:1.3; }
+.three-windows { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:8px 0; }
+.window-card { border:1.3px solid var(--slate-200); background:var(--white); padding:12px 14px; border-radius:4px; }
+.window-card .head { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:7px; padding-bottom:5px; border-bottom:1.3px solid var(--slate-200); }
+.window-card.navy .head { color:var(--navy-700); border-bottom-color:var(--navy-700); }
+.window-card.amber .head { color:var(--amber-700); border-bottom-color:var(--amber-500); }
+.window-card.teal .head { color:var(--teal-700); border-bottom-color:var(--teal-500); }
+.window-card p { font-size:10.5px; line-height:1.4; }
+.stat-card, .window-card, .compare-card, .pillar, .arch-stage, .layer, .lane-row, .date-card, .mapping { box-shadow:0 1px 2.5px rgba(15,20,34,0.08), 0 0.5px 1px rgba(15,20,34,0.06); }
+/* HUD + progress + overview */
+.hud { position:fixed; bottom:16px; left:0; right:0; display:flex; justify-content:space-between; align-items:center; padding:0 20px; color:rgba(255,255,255,0.45); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; pointer-events:none; z-index:20; font-variant-numeric:tabular-nums; }
+.hud-left { display:flex; gap:18px; align-items:center; }
+.hud-right { display:flex; gap:18px; align-items:center; pointer-events:auto; }
+.hud .pos { color:rgba(255,255,255,0.7); font-weight:600; }
+.hud .key { border:1px solid rgba(255,255,255,0.2); padding:3px 7px; border-radius:3px; font-size:10px; background:rgba(255,255,255,0.04); }
+.progress { position:fixed; top:0; left:0; right:0; height:2px; background:rgba(255,255,255,0.06); z-index:30; }
+.progress .bar { height:100%; background:var(--teal-500); transition:width 280ms ease; }
+.overview { position:fixed; inset:0; background:rgba(15,18,28,0.96); z-index:50; display:none; padding:40px 48px; overflow-y:auto; }
+.overview.open { display:block; }
+.overview h2 { color:var(--white); font-weight:600; font-size:22px; margin:0 0 6px; }
+.overview p.sub { color:rgba(255,255,255,0.5); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; margin:0 0 28px; }
+.overview-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+.overview-card { background:var(--white); border-radius:6px; padding:14px 16px; cursor:pointer; border:1px solid var(--slate-200); }
+.overview-card.current { border:2px solid var(--teal-500); }
+.overview-card.divider { background:linear-gradient(135deg,var(--navy-900) 0%,var(--navy-700) 100%); color:var(--white); }
+.overview-card .num { font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--slate-400); font-weight:600; margin-bottom:5px; }
+.overview-card.divider .num { color:var(--teal-500); }
+.overview-card .title { color:var(--slate-950); font-weight:600; font-size:13px; line-height:1.3; }
+.overview-card.divider .title { color:var(--white); }
+.kbd-trap { position:fixed; top:0; left:0; width:1px; height:1px; opacity:0; pointer-events:none; font-size:16px; }
+@media print {
+  body { background:#FFF; }
+  .stage::before, .stage::after, .hud, .progress, .overview { display:none !important; }
+  .stage { position:static; display:block; background:#FFF; }
+  .frame { box-shadow:none; width:auto; height:auto; transform:none !important; }
+  .slide { display:flex !important; page-break-after:always; }
+}
+</style>
+</head>
+<body>
+
+<!-- {{COMPANY_NAME}} logo symbols — PLACEHOLDER wordmarks reading "COMPANY_LOGO". Replace with the real wordmark. -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:fixed;top:0;left:-9999px;width:0;height:0;overflow:hidden;pointer-events:none" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="company-logo-blue" viewBox="0 0 434.10657 95.619486" preserveAspectRatio="xMaxYMid meet">
+      <text x="434.10657" y="62" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="46" font-weight="700" letter-spacing="-1" fill="#0B3B8C">COMPANY_LOGO</text>
+    </symbol>
+    <symbol id="company-logo-white" viewBox="0 0 434.10657 95.619486" preserveAspectRatio="xMaxYMid meet">
+      <text x="434.10657" y="62" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="46" font-weight="700" letter-spacing="-1" fill="#F9F9F9">COMPANY_LOGO</text>
+    </symbol>
+  </defs>
+</svg>
+
+<input class="kbd-trap" id="kbd-trap" aria-hidden="true" tabindex="-1" readonly inputmode="none" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false">
+<div class="progress"><div class="bar" id="progress-bar" style="width:0"></div></div>
+
+<div class="stage" id="stage">
+<div class="frame" id="frame">
+
+  <!-- COVER -->
+  <section class="slide cover active" data-title="Cover" data-kind="cover">
+    <header class="slide-head">
+      <span>{{COMPANY_NAME}} · Example Deck</span>
+      <span class="brand" aria-label="{{COMPANY_NAME}}">
+        <svg class="brand-svg blue" viewBox="0 0 434.10657 95.619486" role="img" aria-hidden="true"><use href="#company-logo-blue"/></svg>
+        <svg class="brand-svg white" viewBox="0 0 434.10657 95.619486" role="img" aria-hidden="true"><use href="#company-logo-white"/></svg>
+      </span>
+    </header>
+    <div class="slide-body">
+      <div class="cover-center">
+        <span class="tag">{{COMPANY_TAGLINE}}</span>
+        <h1>{{COMPANY_NAME}}.</h1>
+        <p class="lede">A QA sample deck generated from the cleaned, shareable create-html-from-md skill.</p>
+      </div>
+      <div class="cover-meta-row">
+        <div>Document<span>Example Deck</span></div>
+        <div>Edition<span>1.0 · 2026-06-25</span></div>
+        <div>Presenter<span>{{PRESENTER_NAME}}<br>{{PRESENTER_EMAIL}}</span></div>
+        <div>Format<span>30-minute working session</span></div>
+      </div>
+    </div>
+    <footer class="slide-foot"><span>→ to begin · ? for keyboard help</span><span>Cover</span></footer>
+  </section>
+
+  <!-- PART I DIVIDER -->
+  <section class="slide part-divider" data-title="Part I · The opportunity" data-kind="divider">
+    <header class="slide-head"><span>Part I</span>
+      <span class="brand" aria-label="{{COMPANY_NAME}}">
+        <svg class="brand-svg blue" viewBox="0 0 434.10657 95.619486" role="img" aria-hidden="true"><use href="#company-logo-blue"/></svg>
+        <svg class="brand-svg white" viewBox="0 0 434.10657 95.619486" role="img" aria-hidden="true"><use href="#company-logo-white"/></svg>
+      </span>
+    </header>
+    <div class="slide-body">
+      <div class="part-number">Part I</div>
+      <h1>The opportunity.</h1>
+      <p class="part-lede">Why the window is open now, and what it costs to wait.</p>
+      <div class="part-chips"><span class="chip">Slides 2–3</span><span class="chip">Minutes 0–10</span></div>
+    </div>
+    <footer class="slide-foot"><span>Part I — The opportunity</span><span>Divider</span></footer>
+  </section>
+
+  <!-- SLIDE 2 — three-stat -->
+  <section class="slide" data-title="02 · The market is moving faster" data-kind="content">
+    <header class="slide-head"><span>Part I · The opportunity</span>
+      <span class="brand" aria-label="{{COMPANY_NAME}}">
+        <svg class="brand-svg blue" viewBox="0 0 434.10657 95.619486" role="img" aria-hidden="true"><use href="#company-logo-blue"/></svg>
+        <svg class="brand-svg white" viewBox="0 0 434.10657 95.619486" role="img" aria-hidden="true"><use href="#company-logo-white"/></svg>
+      </span>
+    </header>
+    <div class="slide-body">
+      <h1>The market is moving faster than incumbents can follow</h1>
+      <div class="accent-bar"></div>
+      <p class="subtitle">A short subtitle that earns the claim.</p>
+      <div class="three-stat">
+        <div class="stat-card"><div class="big">73%</div><div class="label">buyers who change vendor within 18 months</div><div class="source">Survey · 2026</div></div>
+        <div class="stat-card"><div class="big">2.4×</div><div class="label">faster cycle for teams using the platform</div><div class="source">Internal · 2026</div></div>
+        <div class="stat-card"><div class="big">€4.1M</div><div class="label">median annual saving reported</div><div class="source">Customer panel · 2026</div></div>
+      </div>
+      <div class="bottom-callout"><em>Speed of change is the opportunity, not the threat.</em></div>
+    </div>
+    <footer class="slide-foot"><span>02 · The market is moving faster</span><span>Slide 2 of 3</span></footer>
+  </section>
+
+  <!-- SLIDE 3 — three-windows -->
+  <section class="slide" data-title="03 · Three windows on the same problem" data-kind="content">
+    <header class="slide-head"><span>Part I · The opportunity</span>
+      <span class="brand" aria-label="{{COMPANY_NAME}}">
+        <svg class="brand-svg blue" viewBox="0 0 434.10657 95.619486" role="img" aria-hidden="true"><use href="#company-logo-blue"/></svg>
+        <svg class="brand-svg white" viewBox="0 0 434.10657 95.619486" role="img" aria-hidden="true"><use href="#company-logo-white"/></svg>
+      </span>
+    </header>
+    <div class="slide-body">
+      <h1>Three windows on the same problem</h1>
+      <div class="accent-bar"></div>
+      <p class="subtitle">One frame at a time.</p>
+      <div class="three-windows">
+        <div class="window-card navy"><div class="head">Today</div><p>The status quo and why it stalls.</p></div>
+        <div class="window-card amber"><div class="head">Risk</div><p>What breaks if nothing changes.</p></div>
+        <div class="window-card teal"><div class="head">Tomorrow</div><p>The shape of the fix.</p></div>
+      </div>
+      <div class="bottom-callout teal"><em>Same problem, three vantage points.</em></div>
+    </div>
+    <footer class="slide-foot"><span>03 · Three windows on the same problem</span><span>Slide 3 of 3</span></footer>
+  </section>
+
+  <!-- SLIDE 4 — sources -->
+  <section class="slide" data-title="04 · Sources" data-kind="content">
+    <header class="slide-head"><span>Appendix</span>
+      <span class="brand" aria-label="{{COMPANY_NAME}}">
+        <svg class="brand-svg blue" viewBox="0 0 434.10657 95.619486" role="img" aria-hidden="true"><use href="#company-logo-blue"/></svg>
+        <svg class="brand-svg white" viewBox="0 0 434.10657 95.619486" role="img" aria-hidden="true"><use href="#company-logo-white"/></svg>
+      </span>
+    </header>
+    <div class="slide-body">
+      <h1>Sources</h1>
+      <div class="accent-bar"></div>
+      <div class="cols">
+        <div class="col"><h3>Primary</h3><ul><li>Buyer survey, 2026.</li><li>Internal benchmark, 2026.</li></ul></div>
+        <div class="col"><h3>Secondary</h3><ul><li>Customer panel, 2026.</li></ul></div>
+      </div>
+      <div class="bottom-callout"><em>Every number on the preceding slides traces to one of these.</em></div>
+    </div>
+    <footer class="slide-foot"><span>04 · Sources</span><span>Slide — appendix</span></footer>
+  </section>
+
+</div>
+</div>
+
+<div class="hud">
+  <div class="hud-left"><span id="title-display"></span><span class="pos" id="pos-display"></span></div>
+  <div class="hud-right">
+    <span class="hint"><span class="key">←</span><span class="key">→</span></span>
+    <span class="hint"><span class="key">O</span> overview</span>
+    <span class="hint"><span class="key">f</span> fit · <span class="key">⇧F</span> fill</span>
+    <span class="hint"><span class="key">P</span> print</span>
+    <span class="hint"><span class="key">?</span></span>
+  </div>
+</div>
+
+<div class="overview" id="overview">
+  <div class="close-hint">Esc to close</div>
+  <h2>Example Deck</h2>
+  <p class="sub">5 slides · 1 part</p>
+  <div class="overview-grid" id="overview-grid"></div>
+</div>
+
+<script>
+(function() {
+  const stage = document.getElementById('stage');
+  const frame = document.getElementById('frame');
+  const overview = document.getElementById('overview');
+  const overviewGrid = document.getElementById('overview-grid');
+  const progressBar = document.getElementById('progress-bar');
+  const titleDisplay = document.getElementById('title-display');
+  const posDisplay = document.getElementById('pos-display');
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let idx = 0;
+  slides.forEach((s, i) => {
+    const card = document.createElement('div');
+    card.className = 'overview-card' + (s.dataset.kind === 'divider' ? ' divider' : '');
+    card.innerHTML = `<div class="num">${String(i + 1).padStart(2, '0')} / ${total}</div><div class="title">${s.dataset.title || ''}</div>`;
+    card.addEventListener('click', () => { go(i); toggleOverview(false); });
+    overviewGrid.appendChild(card);
+  });
+  const overviewCards = Array.from(overviewGrid.children);
+  function go(n) {
+    if (n === idx) return;
+    slides[idx].classList.remove('active');
+    overviewCards[idx] && overviewCards[idx].classList.remove('current');
+    idx = n;
+    slides[idx].classList.add('active');
+    overviewCards[idx] && overviewCards[idx].classList.add('current');
+    progressBar.style.width = (idx / (total - 1) * 100) + '%';
+    titleDisplay.textContent = slides[idx].getAttribute('data-title') || '';
+    posDisplay.textContent = ` · ${String(idx + 1).padStart(2, '0')} of ${String(total).padStart(2, '0')}`;
+    if (history.replaceState) history.replaceState(null, '', '#slide-' + idx);
+  }
+  function next() { go(Math.min(idx + 1, total - 1)); }
+  function prev() { go(Math.max(idx - 1, 0)); }
+  function toggleOverview(force) {
+    const willOpen = force === undefined ? !overview.classList.contains('open') : force;
+    overview.classList.toggle('open', willOpen);
+  }
+  function setFillScreen(on) { document.body.classList.toggle('fill-screen', on); fit(); }
+  function toggleFullscreen(fillScreen) {
+    const inFs = !!document.fullscreenElement;
+    const inFill = document.body.classList.contains('fill-screen');
+    if (!inFs) { (document.documentElement.requestFullscreen || (() => {})).call(document.documentElement); setFillScreen(!!fillScreen); }
+    else if ((!!fillScreen) === inFill) { (document.exitFullscreen || (() => {})).call(document); setFillScreen(false); }
+    else { setFillScreen(!!fillScreen); }
+  }
+  document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) setFillScreen(false); });
+  function openPrint() { window.open('example-deck-v1.0-print.html', '_blank'); }
+  function showHelp() { alert('Example Deck · Keyboard\n\n→ Space PageDown  Next\n← Backspace PageUp Prev\nHome / End  First / last\nO / Esc  Overview\nf  Fullscreen fit\n⇧F Fullscreen fill\nP  Print edition\n?  This help'); }
+  document.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = e.key;
+    if (overview.classList.contains('open')) { if (k === 'Escape' || k === 'o' || k === 'O') { toggleOverview(false); e.preventDefault(); } return; }
+    if (k === 'ArrowRight' || k === ' ' || k === 'PageDown') { next(); e.preventDefault(); }
+    else if (k === 'ArrowLeft' || k === 'Backspace' || k === 'PageUp') { prev(); e.preventDefault(); }
+    else if (k === 'Home') { go(0); e.preventDefault(); }
+    else if (k === 'End') { go(total - 1); e.preventDefault(); }
+    else if (k === 'o' || k === 'O') { toggleOverview(); e.preventDefault(); }
+    else if (k === 'f') { toggleFullscreen(false); e.preventDefault(); }
+    else if (k === 'F') { toggleFullscreen(true); e.preventDefault(); }
+    else if (k === 'p' || k === 'P') { openPrint(); e.preventDefault(); }
+    else if (k === '?') { showHelp(); e.preventDefault(); }
+    else if (k === 'Escape') { toggleOverview(false); }
+  });
+  stage.addEventListener('click', (e) => {
+    if (e.target.closest('.frame') || e.target.closest('.hud') || e.target.closest('.overview')) return;
+    const x = e.clientX, w = window.innerWidth;
+    if (x < w * 0.25) prev(); else if (x > w * 0.75) next();
+  });
+  const m = (location.hash || '').match(/slide-(\d+)/);
+  if (m) { const n = Math.min(total - 1, Math.max(0, parseInt(m[1], 10))); if (n !== 0) go(n); }
+  progressBar.style.width = (idx / (total - 1) * 100) + '%';
+  titleDisplay.textContent = slides[idx].getAttribute('data-title') || '';
+  posDisplay.textContent = ` · ${String(idx + 1).padStart(2, '0')} of ${String(total).padStart(2, '0')}`;
+  overviewCards[idx] && overviewCards[idx].classList.add('current');
+  function fit() {
+    const isFill = document.body.classList.contains('fill-screen');
+    if (isFill) { frame.style.transform = `scale(${window.innerWidth / 1280}, ${window.innerHeight / 720})`; }
+    else { const vw = window.innerWidth - 64; const vh = window.innerHeight - 64 - 40; const s = Math.min(vw / 1280, vh / 720, 1.4); frame.style.transform = `scale(${s})`; }
+  }
+  window.addEventListener('resize', fit);
+  fit();
+})();
+</script>
+</body>
+</html>

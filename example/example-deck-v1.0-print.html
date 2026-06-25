@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Example Deck · Print edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 landscape; margin: 0; }
+:root {
+  --navy-900:#06245A; --navy-700:#0B3B8C; --navy-500:#2E5BBF; --navy-50:#EAF1FB;
+  --teal-700:#16998A; --teal-500:#1FB8A0; --teal-50:#EAF7F4;
+  --amber-700:#C7770A; --amber-500:#F39C12; --amber-50:#FCEDB7;
+  --slate-950:#0F1422; --slate-800:#1F2A3D; --slate-600:#4A5A70;
+  --slate-400:#8A95A8; --slate-200:#E2E6EC; --slate-100:#EEF1F5; --slate-50:#F8FAFC;
+  --white:#FFFFFF; --success:#28A745; --danger:#D9534F;
+  --page-w:297mm; --page-h:209mm; --pad-x:14mm; --pad-t:11mm; --pad-b:10mm;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+* { box-sizing: border-box; }
+html { background:#ECECEC; }
+body { margin:0; font-family:var(--sans); color:var(--slate-600); }
+.print-banner { background:var(--navy-900); color:#fff; font-family:var(--sans); font-size:12px; line-height:1.5; padding:12px 18px; }
+.print-banner b { color:var(--teal-500); }
+.page { width:var(--page-w); height:var(--page-h); overflow:hidden; background:#FFF; position:relative; padding:var(--pad-t) var(--pad-x) var(--pad-b); display:flex; flex-direction:column; page-break-inside:avoid; break-inside:avoid; break-after:page; margin:0 auto 8mm; box-shadow:0 2mm 6mm rgba(0,0,0,0.08); }
+.page:last-child { break-after:auto; }
+.page-head, .page-foot { flex:0 0 auto; display:flex; justify-content:space-between; align-items:center; font-size:8pt; letter-spacing:0.08em; text-transform:uppercase; color:var(--slate-400); font-variant-numeric:tabular-nums; font-weight:500; }
+.page-head { border-bottom:0.26mm solid var(--slate-200); margin-bottom:5mm; padding-bottom:3mm; }
+.page-foot { border-top:0.26mm solid var(--slate-200); margin-top:auto; padding-top:3mm; }
+.page-head .brand svg { height:6mm; width:auto; }
+.page-head .brand .white { display:none; }
+.page.cover .page-head .brand .blue, .page.part-divider .page-head .brand .blue { display:none; }
+.page.cover .page-head .brand .white, .page.part-divider .page-head .brand .white { display:inline; }
+.page-body { flex:1 1 auto; display:flex; flex-direction:column; overflow:hidden; min-height:0; }
+.page-body h1 { font-size:26pt; font-weight:700; line-height:1.1; letter-spacing:-0.015em; color:var(--navy-700); margin:0 0 2mm; }
+.accent-bar { width:12mm; height:1mm; background:var(--teal-500); margin:0 0 3mm; }
+.subtitle { font-size:12.5pt; line-height:1.4; margin:0 0 4mm; color:var(--slate-600); }
+.page p { font-size:10.5pt; line-height:1.45; margin:0 0 2mm; }
+.bottom-callout { margin-top:auto; padding:3mm 5mm; font-style:italic; background:var(--navy-50); border-left:0.91mm solid var(--navy-700); color:var(--slate-800); font-size:11pt; }
+.bottom-callout.teal { background:var(--teal-50); border-left-color:var(--teal-500); }
+.cols { display:flex; gap:8mm; align-items:flex-start; }
+.cols .col { flex:1 1 0; min-width:0; }
+.cols .col h3 { font-size:9pt; letter-spacing:0.06em; text-transform:uppercase; color:var(--slate-800); margin:0 0 1.5mm; }
+.cols .col ul { padding-left:5mm; margin:0 0 3mm; }
+.cols .col li { font-size:10pt; line-height:1.4; }
+/* cover + divider */
+.page.cover { background:var(--navy-900); color:#fff; padding:16mm 18mm 14mm; }
+.page.cover .page-head, .page.part-divider .page-head { color:rgba(255,255,255,0.6); border-bottom-color:rgba(255,255,255,0.18); }
+.page.cover .page-foot, .page.part-divider .page-foot { color:rgba(255,255,255,0.5); border-top-color:rgba(255,255,255,0.18); }
+.page.cover .cover-center { margin:auto 0; }
+.page.cover .tag { display:inline-block; font-size:9pt; letter-spacing:0.16em; text-transform:uppercase; color:var(--teal-500); border:0.3mm solid var(--teal-500); padding:2mm 5mm; border-radius:999px; margin-bottom:6mm; }
+.page.cover h1 { font-size:70pt; line-height:1.0; letter-spacing:-0.035em; color:#fff; margin:0 0 5mm; }
+.page.cover .lede { font-size:14pt; color:rgba(255,255,255,0.8); max-width:200mm; line-height:1.5; }
+.page.cover .cover-meta-row { display:grid; grid-template-columns:repeat(4,1fr); gap:6mm; font-size:8pt; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-top:10mm; padding-top:4mm; border-top:0.3mm solid rgba(255,255,255,0.18); }
+.page.cover .cover-meta-row div span { display:block; color:#fff; font-size:10pt; letter-spacing:0; text-transform:none; margin-top:1.5mm; }
+.page.part-divider { background:linear-gradient(135deg,var(--navy-900) 0%,var(--navy-700) 100%); color:#fff; padding:16mm 18mm 14mm; }
+.page.part-divider .page-body { justify-content:center; }
+.page.part-divider .part-number { font-size:9pt; letter-spacing:0.22em; text-transform:uppercase; color:var(--teal-500); margin-bottom:4mm; font-weight:600; }
+.page.part-divider h1 { font-size:56pt; line-height:1.0; letter-spacing:-0.03em; color:#fff; margin:0 0 5mm; }
+.page.part-divider .part-lede { font-size:13pt; color:rgba(255,255,255,0.75); max-width:200mm; line-height:1.5; }
+/* patterns */
+.three-stat { display:grid; grid-template-columns:repeat(3,1fr); gap:5mm; margin:3mm 0; }
+.stat-card { background:#fff; border:0.26mm solid var(--slate-200); border-top:0.91mm solid var(--navy-700); padding:5mm 6mm; border-radius:1mm; }
+.stat-card .big { font-size:32pt; font-weight:700; color:var(--navy-700); line-height:1.0; letter-spacing:-0.03em; font-variant-numeric:tabular-nums; margin-bottom:2mm; }
+.stat-card .label { font-size:10pt; color:var(--slate-800); font-weight:500; line-height:1.35; margin-bottom:1.5mm; }
+.stat-card .source { font-size:8pt; color:var(--slate-400); font-style:italic; }
+.three-windows { display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; margin:3mm 0; }
+.window-card { border:0.26mm solid var(--slate-200); background:#fff; padding:4mm 5mm; border-radius:1mm; }
+.window-card .head { font-size:8.5pt; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:2mm; padding-bottom:1.5mm; border-bottom:0.26mm solid var(--slate-200); }
+.window-card.navy .head { color:var(--navy-700); border-bottom-color:var(--navy-700); }
+.window-card.amber .head { color:var(--amber-700); border-bottom-color:var(--amber-500); }
+.window-card.teal .head { color:var(--teal-700); border-bottom-color:var(--teal-500); }
+.window-card p { font-size:9.5pt; line-height:1.4; margin:0; }
+.stat-card, .window-card { box-shadow:0 0.25mm 0.7mm rgba(15,20,34,0.08), 0 0.1mm 0.25mm rgba(15,20,34,0.06); }
+@media screen { body { padding:0 0 12mm; } }
+@media print {
+  html, body { margin:0 !important; padding:0 !important; background:#FFF !important; }
+  .print-banner { display:none !important; }
+  .page { margin:0 !important; padding:var(--pad-t) var(--pad-x) var(--pad-b) !important; box-shadow:none !important; break-after:page; break-inside:avoid; page-break-inside:avoid; }
+  .page.cover { padding:16mm 18mm 14mm !important; box-shadow:0 0 0 5mm var(--navy-900) !important; }
+  .page:last-child { break-after:auto; }
+  .stat-card, .window-card { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  a { color:inherit !important; text-decoration:none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="print-banner">
+  <strong>To print:</strong> open in <b>Chrome</b> · ⌘P · Destination: <b>Save as PDF</b> · Paper: <b>A4</b> · Layout: <b>Landscape</b> · Margins: <b>None</b> (critical) · Background graphics: <b>On</b> (critical) · Scale: <b>100%</b> · Headers and footers: <b>Off</b>.
+</div>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:fixed;top:0;left:-9999px;width:0;height:0;overflow:hidden;pointer-events:none" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="company-logo-blue" viewBox="0 0 434.10657 95.619486" preserveAspectRatio="xMaxYMid meet">
+      <text x="434.10657" y="62" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="46" font-weight="700" letter-spacing="-1" fill="#0B3B8C">COMPANY_LOGO</text>
+    </symbol>
+    <symbol id="company-logo-white" viewBox="0 0 434.10657 95.619486" preserveAspectRatio="xMaxYMid meet">
+      <text x="434.10657" y="62" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="46" font-weight="700" letter-spacing="-1" fill="#F9F9F9">COMPANY_LOGO</text>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- COVER -->
+<section class="page cover">
+  <header class="page-head"><span>{{COMPANY_NAME}} · Example Deck</span><span>Edition 1.0 · 2026-06-25</span></header>
+  <div class="page-body">
+    <div class="cover-center">
+      <span class="tag">{{COMPANY_TAGLINE}}</span>
+      <h1>{{COMPANY_NAME}}.</h1>
+      <p class="lede">A QA sample deck generated from the cleaned, shareable create-html-from-md skill.</p>
+    </div>
+    <div class="cover-meta-row">
+      <div>Document<span>Example Deck</span></div>
+      <div>Edition<span>1.0 · 2026-06-25</span></div>
+      <div>Presenter<span>{{PRESENTER_NAME}} · {{PRESENTER_EMAIL}}</span></div>
+      <div>Format<span>30-minute working session</span></div>
+    </div>
+  </div>
+  <footer class="page-foot"><span>Print edition · A4 landscape</span><span>Cover</span></footer>
+</section>
+
+<!-- PART I DIVIDER -->
+<section class="page part-divider">
+  <header class="page-head"><span>Part I</span><span class="brand"><svg class="blue" viewBox="0 0 434.10657 95.619486"><use href="#company-logo-blue"/></svg><svg class="white" viewBox="0 0 434.10657 95.619486"><use href="#company-logo-white"/></svg></span></header>
+  <div class="page-body">
+    <div class="part-number">Part I</div>
+    <h1>The opportunity.</h1>
+    <p class="part-lede">Why the window is open now, and what it costs to wait.</p>
+  </div>
+  <footer class="page-foot"><span>Part I — The opportunity</span><span>Page 1</span></footer>
+</section>
+
+<!-- SLIDE 2 — three-stat -->
+<section class="page">
+  <header class="page-head"><span>02 · The opportunity</span><span class="brand"><svg class="blue" viewBox="0 0 434.10657 95.619486"><use href="#company-logo-blue"/></svg><svg class="white" viewBox="0 0 434.10657 95.619486"><use href="#company-logo-white"/></svg></span></header>
+  <div class="page-body">
+    <h1>The market is moving faster than incumbents can follow.</h1>
+    <div class="accent-bar"></div>
+    <p class="subtitle">A short subtitle that earns the claim.</p>
+    <div class="three-stat">
+      <div class="stat-card"><div class="big">73%</div><div class="label">buyers who change vendor within 18 months</div><div class="source">Survey · 2026</div></div>
+      <div class="stat-card"><div class="big">2.4×</div><div class="label">faster cycle for teams using the platform</div><div class="source">Internal · 2026</div></div>
+      <div class="stat-card"><div class="big">€4.1M</div><div class="label">median annual saving reported</div><div class="source">Customer panel · 2026</div></div>
+    </div>
+    <div class="bottom-callout"><em>Speed of change is the opportunity, not the threat.</em></div>
+  </div>
+  <footer class="page-foot"><span>02 · The opportunity</span><span>Page 2</span></footer>
+</section>
+
+<!-- SLIDE 3 — three-windows -->
+<section class="page">
+  <header class="page-head"><span>03 · The opportunity</span><span class="brand"><svg class="blue" viewBox="0 0 434.10657 95.619486"><use href="#company-logo-blue"/></svg><svg class="white" viewBox="0 0 434.10657 95.619486"><use href="#company-logo-white"/></svg></span></header>
+  <div class="page-body">
+    <h1>Three windows on the same problem.</h1>
+    <div class="accent-bar"></div>
+    <p class="subtitle">One frame at a time.</p>
+    <div class="three-windows">
+      <div class="window-card navy"><div class="head">Today</div><p>The status quo and why it stalls.</p></div>
+      <div class="window-card amber"><div class="head">Risk</div><p>What breaks if nothing changes.</p></div>
+      <div class="window-card teal"><div class="head">Tomorrow</div><p>The shape of the fix.</p></div>
+    </div>
+    <div class="bottom-callout teal"><em>Same problem, three vantage points.</em></div>
+  </div>
+  <footer class="page-foot"><span>03 · The opportunity</span><span>Page 3</span></footer>
+</section>
+
+<!-- SLIDE 4 — sources -->
+<section class="page">
+  <header class="page-head"><span>04 · Appendix</span><span class="brand"><svg class="blue" viewBox="0 0 434.10657 95.619486"><use href="#company-logo-blue"/></svg><svg class="white" viewBox="0 0 434.10657 95.619486"><use href="#company-logo-white"/></svg></span></header>
+  <div class="page-body">
+    <h1>Sources.</h1>
+    <div class="accent-bar"></div>
+    <div class="cols">
+      <div class="col"><h3>Primary</h3><ul><li>Buyer survey, 2026.</li><li>Internal benchmark, 2026.</li></ul></div>
+      <div class="col"><h3>Secondary</h3><ul><li>Customer panel, 2026.</li></ul></div>
+    </div>
+    <div class="bottom-callout"><em>Every number on the preceding pages traces to one of these.</em></div>
+  </div>
+  <footer class="page-foot"><span>04 · Appendix</span><span>Page 4</span></footer>
+</section>
+
+</body>
+</html>
