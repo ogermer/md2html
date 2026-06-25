@@ -36,7 +36,22 @@ CLAUDE.md                   ← architecture notes for Claude Code
 
 ## Install
 
-Copy the `create-html-from-md/` directory into your Claude Code skills location (e.g. a plugin's `skills/` directory or `~/.claude/skills/`), then ask Claude to "build the webview/print HTML from `<your-deck>.md`".
+Clone the repository:
+
+```sh
+git clone https://github.com/ogermer/md2html.git
+cd md2html
+```
+
+(Or with the GitHub CLI: `gh repo clone ogermer/md2html`.)
+
+Then copy the `create-html-from-md/` directory into your Claude Code skills location (e.g. a plugin's `skills/` directory or `~/.claude/skills/`):
+
+```sh
+cp -r create-html-from-md ~/.claude/skills/
+```
+
+Now ask Claude to "build the webview/print HTML from `<your-deck>.md`".
 
 ## Example
 
