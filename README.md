@@ -41,3 +41,7 @@ Copy the `create-html-from-md/` directory into your Claude Code skills location 
 ## Example
 
 The [`example/`](example/) folder contains a sample deck (`example-deck-v1.0.md`) and its generated Web Viewer, Print HTML, and a PDF exported from the print edition — built from this template with placeholders left in place, so you can see exactly what the skill produces.
+
+## License
+
+[MIT](LICENSE) — free to use, copy, modify, distribute, and use commercially.
