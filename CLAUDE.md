@@ -31,6 +31,8 @@ The files form a deliberate hierarchy — understand it before editing any one o
 - **`skeletons.md` + `patterns.md` are the assembly source.** Skeletons are whole-file templates; patterns are the per-slide blocks pasted into the skeleton's slide loop. These embed the literal CSS values from `brand.md`.
 - **`*-spec.md` are intentional snapshots** of an upstream brand-guide, copied in so the skill is self-contained and works even if the upstream moves. If upstream changes, refresh these snapshots here directly — they are reference, not the assembly source.
 
+A sibling `example/` directory holds a worked sample: the Markdown source (`example-deck-v1.0.md`), both generated outputs (`….html` and `…-print.html`), the print PDF, and screenshots. It is a reference artifact, not part of the skill — regenerate it from the source if the skill changes, but the skill never reads from it.
+
 ## Working in this repo
 
 There is nothing to build or lint. Editing the skill means editing Markdown. The only executable checks are the **output-verification commands** the skill runs *after generating a deck's HTML* (these validate generated files, not this repo). From `references/skeletons.md` § Verification commands and `SKILL.md` § Step 5:
